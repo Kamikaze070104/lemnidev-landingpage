@@ -1,42 +1,323 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* ───────────────────────────────────────────
+   Hero Section — Premium Animations
+   ─────────────────────────────────────────── */
+
+/* Aurora Orbs — floating background blobs */
+.aurora-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  mix-blend-mode: screen;
+  will-change: transform;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.aurora-orb-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
+  top: 10%;
+  left: 15%;
+  animation: aurora-float-1 20s ease-in-out infinite;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.aurora-orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+  bottom: 15%;
+  right: 10%;
+  animation: aurora-float-2 25s ease-in-out infinite;
+}
+
+.aurora-orb-3 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: aurora-float-3 18s ease-in-out infinite;
+}
+
+@keyframes aurora-float-1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
   }
-  to {
-    transform: rotate(360deg);
+
+  25% {
+    transform: translate(60px, -40px) scale(1.1);
+  }
+
+  50% {
+    transform: translate(-30px, 50px) scale(0.9);
+  }
+
+  75% {
+    transform: translate(40px, 30px) scale(1.05);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@keyframes aurora-float-2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  25% {
+    transform: translate(-50px, 30px) scale(1.05);
+  }
+
+  50% {
+    transform: translate(40px, -50px) scale(1.1);
+  }
+
+  75% {
+    transform: translate(-30px, -20px) scale(0.95);
   }
 }
 
-.card {
-  padding: 2em;
+@keyframes aurora-float-3 {
+
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  33% {
+    transform: translate(-40%, -60%) scale(1.15);
+  }
+
+  66% {
+    transform: translate(-55%, -45%) scale(0.9);
+  }
 }
 
-.read-the-docs {
-  color: #888;
+/* Badge — glowing dot + shimmer */
+.hero-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #818cf8;
+  margin-right: 10px;
+  position: relative;
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+.hero-badge-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: rgba(129, 140, 248, 0.4);
+  animation: badge-ring 2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes badge-ring {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Hero letter animation (initial state set by JS) */
+.hero-letter {
+  will-change: transform, opacity;
+  transform-origin: center bottom;
+}
+
+/* Magnetic Button */
+.magnetic-btn {
+  will-change: transform;
+  cursor: pointer;
+}
+
+.magnetic-btn-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #818cf8, #a78bfa);
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.magnetic-btn:hover .magnetic-btn-bg {
+  transform: scaleX(1);
+}
+
+.magnetic-btn:hover {
+  color: white;
+}
+
+/* Scroll Indicator */
+.scroll-chevron-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin-top: -2px;
+}
+
+.scroll-chevron {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+.scroll-chevron-delayed {
+  margin-top: -14px;
+  animation-delay: 0.15s;
+  opacity: 0.5;
+}
+
+@keyframes scroll-bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
+/* ─── Infinite Marquee (Diagonal TechStack) ─── */
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left var(--duration, 35s) linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right var(--duration, 35s) linear infinite;
+}
+
+.animate-marquee-left:hover,
+.animate-marquee-right:hover {
+  animation-play-state: paused;
+}
+
+/* Client section marquee (keep existing) */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Team Carousel ─── */
+.team-carousel {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.team-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Loading Screen ─── */
+@keyframes loader-pulse {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes loader-bar {
+  0% {
+    transform: scaleX(0);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.loader-logo {
+  animation: loader-pulse 2s ease-in-out infinite;
+}
+
+.loader-bar {
+  transform-origin: left;
+  animation: loader-bar 2s ease-in-out forwards;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .aurora-orb-1 {
+    width: 250px;
+    height: 250px;
+  }
+
+  .aurora-orb-2 {
+    width: 200px;
+    height: 200px;
+  }
+
+  .aurora-orb-3 {
+    width: 180px;
+    height: 180px;
+  }
 }

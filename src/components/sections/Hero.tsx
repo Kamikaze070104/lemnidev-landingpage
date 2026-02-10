@@ -1,73 +1,238 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import React, { useEffect, useRef, useCallback } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowRight, ChevronDown } from 'lucide-react';
+import AnimatedGridBackground from '../ui/AnimatedGridBackground';
 
-const Hero: React.FC = () => {
+gsap.registerPlugin(ScrollTrigger);
+
+/* ─── Magnetic Button ─── */
+const MagneticButton: React.FC<{ children: React.ReactNode; href: string }> = ({ children, href }) => {
+    const btnRef = useRef<HTMLAnchorElement>(null);
+
+    const handleMouseMove = useCallback((e: React.MouseEvent) => {
+        if (!btnRef.current) return;
+        const rect = btnRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(btnRef.current, {
+            x: x * 0.3,
+            y: y * 0.3,
+            duration: 0.4,
+            ease: 'power2.out',
+        });
+    }, []);
+
+    const handleMouseLeave = useCallback(() => {
+        if (!btnRef.current) return;
+        gsap.to(btnRef.current, {
+            x: 0,
+            y: 0,
+            duration: 0.7,
+            ease: 'elastic.out(1, 0.3)',
+        });
+    }, []);
+
     return (
-        <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-neutral-950 text-white">
-            <div className="absolute inset-0 z-0">
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl mix-blend-screen animate-pulse" />
-                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl mix-blend-screen animate-pulse delay-1000" />
-            </div>
+        <a
+            ref={btnRef}
+            href={href}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="magnetic-btn inline-flex items-center px-8 py-4 bg-white text-neutral-950 font-bold rounded-full transition-all duration-300 group relative overflow-hidden"
+        >
+            <span className="magnetic-btn-bg" />
+            <span className="relative z-10 flex items-center">
+                {children}
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+            </span>
+        </a>
+    );
+};
 
-            <div className="container mx-auto px-4 z-10 text-center">
-                <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                >
-                    <h2 className="text-xl md:text-2xl font-light tracking-widest text-indigo-400 mb-4 uppercase">
-                        Technology Team
-                    </h2>
-                </motion.div>
-
-                <motion.h1
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                    className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-500"
-                >
-                    LEMNIDEV
-                </motion.h1>
-
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                    className="text-lg md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed"
-                >
-                    Kami membantu organisasi membangun sistem digital yang efisien, aman, dan berkelanjutan dengan pengembangan aplikasi dan AI Workflow.
-                </motion.p>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.8 }}
-                >
-                    <a
-                        href="#work"
-                        className="inline-flex items-center px-8 py-4 bg-white text-neutral-950 font-bold rounded-full hover:bg-neutral-200 transition-colors group"
-                    >
-                        Lihat Proyek Kami
-                        <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                    </a>
-                </motion.div>
-            </div>
-
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 1 }}
-                className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+/* ─── Pre-rendered Heading Letters ─── */
+const HEADING_TEXT = 'LEMNIDEV';
+const HeadingLetters: React.FC = () => (
+    <>
+        {HEADING_TEXT.split('').map((char, i) => (
+            <span
+                key={i}
+                className="hero-letter inline-block"
+                style={{ opacity: 0, transform: 'translateY(80px) rotateX(90deg)' }}
             >
-                <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1">
-                    <motion.div
-                        animate={{ y: [0, 12, 0] }}
-                        transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                        className="w-1.5 h-1.5 bg-white rounded-full"
-                    />
+                {char}
+            </span>
+        ))}
+    </>
+);
+
+/* ─── Hero Section ─── */
+const Hero: React.FC = () => {
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const headingRef = useRef<HTMLHeadingElement>(null);
+
+    useEffect(() => {
+        if (!headingRef.current || !contentRef.current || !sectionRef.current) return;
+
+        const letters = headingRef.current.querySelectorAll('.hero-letter');
+
+        const runIntroAnimation = () => {
+            const ctx = gsap.context(() => {
+                const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+                // 1. Badge slides down with fade
+                tl.fromTo(
+                    '.hero-badge',
+                    { y: -30, opacity: 0, scale: 0.8 },
+                    { y: 0, opacity: 1, scale: 1, duration: 0.8 },
+                    0.2
+                );
+
+                // 2. Animate letter spans
+                tl.to(
+                    letters,
+                    {
+                        y: 0,
+                        rotateX: 0,
+                        opacity: 1,
+                        duration: 1,
+                        stagger: 0.06,
+                        ease: 'back.out(1.7)',
+                    },
+                    0.5
+                );
+
+                // 3. Subtitle fades in
+                tl.fromTo(
+                    '.hero-subtitle',
+                    { y: 40, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 1 },
+                    1.2
+                );
+
+                // 4. CTA button slides up
+                tl.fromTo(
+                    '.hero-cta',
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8 },
+                    1.6
+                );
+
+                // 5. Scroll indicator appears
+                tl.fromTo(
+                    '.hero-scroll-indicator',
+                    { opacity: 0 },
+                    { opacity: 1, duration: 0.6 },
+                    2.0
+                );
+
+                // 6. Parallax on scroll
+                ScrollTrigger.create({
+                    trigger: sectionRef.current,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1,
+                    onUpdate: (self) => {
+                        if (contentRef.current) {
+                            gsap.set(contentRef.current, {
+                                y: self.progress * 150,
+                                opacity: 1 - self.progress * 1.2,
+                            });
+                        }
+                    },
+                });
+            }, sectionRef);
+
+            return ctx;
+        };
+
+        // Wait for loading screen to finish before starting hero animation
+        let ctx: gsap.Context | null = null;
+
+        const onLoadingComplete = () => {
+            ctx = runIntroAnimation();
+        };
+
+        window.addEventListener('loading-complete', onLoadingComplete);
+
+        // Fallback: if loading-complete already fired or no loading screen
+        const fallbackTimer = setTimeout(() => {
+            if (!ctx) {
+                ctx = runIntroAnimation();
+            }
+        }, 3500);
+
+        return () => {
+            window.removeEventListener('loading-complete', onLoadingComplete);
+            clearTimeout(fallbackTimer);
+            ctx?.revert();
+        };
+    }, []);
+
+    return (
+        <section
+            ref={sectionRef}
+            id="home"
+            className="relative h-screen flex items-center justify-center overflow-hidden bg-neutral-950 text-white"
+        >
+            {/* Animated Grid Background */}
+            <AnimatedGridBackground />
+
+            {/* Aurora Orbs */}
+            <div className="absolute inset-0 z-[1] overflow-hidden pointer-events-none">
+                <div className="aurora-orb aurora-orb-1" />
+                <div className="aurora-orb aurora-orb-2" />
+                <div className="aurora-orb aurora-orb-3" />
+            </div>
+
+            {/* Radial gradient vignette */}
+            <div className="absolute inset-0 z-[2] bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(10,10,10,0.4)_70%,rgba(10,10,10,0.8)_100%)]" />
+
+            {/* Content */}
+            <div ref={contentRef} className="container mx-auto px-4 z-10 text-center relative">
+                {/* Badge */}
+                <div className="hero-badge inline-flex items-center px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-sm mb-8" style={{ opacity: 0 }}>
+                    <span className="hero-badge-dot" />
+                    <span className="text-sm font-medium text-indigo-300 tracking-widest uppercase">
+                        Technology Team
+                    </span>
                 </div>
-            </motion.div>
+
+                {/* Main Heading */}
+                <h1
+                    ref={headingRef}
+                    className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-8"
+                    style={{ perspective: '1000px' }}
+                >
+                    <HeadingLetters />
+                </h1>
+
+                {/* Subtitle */}
+                <p className="hero-subtitle text-lg md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed" style={{ opacity: 0 }}>
+                    Kami membantu organisasi membangun sistem digital yang{' '}
+                    <span className="text-indigo-400 font-medium">efisien</span>,{' '}
+                    <span className="text-purple-400 font-medium">aman</span>, dan{' '}
+                    <span className="text-violet-400 font-medium">berkelanjutan</span> dengan pengembangan
+                    aplikasi dan AI Workflow.
+                </p>
+
+                {/* CTA */}
+                <div className="hero-cta" style={{ opacity: 0 }}>
+                    <MagneticButton href="#work">
+                        Lihat Proyek Kami
+                    </MagneticButton>
+                </div>
+            </div>
+
+            {/* Scroll Indicator */}
+            <div className="hero-scroll-indicator absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2" style={{ opacity: 0 }}>
+                <span className="text-xs text-gray-500 tracking-[0.3em] uppercase">Scroll</span>
+                <div className="scroll-chevron-container">
+                    <ChevronDown size={20} className="scroll-chevron text-gray-500" />
+                    <ChevronDown size={20} className="scroll-chevron scroll-chevron-delayed text-gray-500" />
+                </div>
+            </div>
         </section>
     );
 };

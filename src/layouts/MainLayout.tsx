@@ -4,8 +4,12 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Cursor from '../components/Cursor';
 import ScrollToTop from '../components/ScrollToTop';
+import { useSmoothScroll } from '../hooks/useSmoothScroll';
 
 const MainLayout: React.FC = () => {
+    // Initialize Lenis smooth scrolling
+    useSmoothScroll();
+
     return (
         <div className="flex flex-col min-h-screen bg-neutral-950 text-white cursor-none">
             <Cursor />
