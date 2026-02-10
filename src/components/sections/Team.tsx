@@ -9,8 +9,7 @@ const head = {
     name: 'Bentar Ristianto',
     role: 'Head of Solution',
     gradient: 'from-indigo-500 to-violet-600',
-    image: 'B',
-    social: { linkedin: '#' }
+    initial: 'B'
 };
 
 const divisions = [
@@ -18,58 +17,90 @@ const divisions = [
         name: 'Operations',
         color: 'emerald',
         members: [
-            { name: 'Muh. Athif Fadh', role: 'Keuangan', gradient: 'from-emerald-500 to-teal-600' },
-            { name: 'Agung Fathul', role: 'Human Relation', gradient: 'from-amber-500 to-orange-600' },
+            { name: 'Muh. Athif Fadh', role: 'Keuangan', gradient: 'from-emerald-500 to-teal-600', initial: 'MA' },
+            { name: 'Agung Fathul', role: 'Human Relation', gradient: 'from-amber-500 to-orange-600', initial: 'AF' },
         ]
     },
     {
         name: 'Engineering',
         color: 'blue',
         members: [
-            { name: 'Davi Hanan Luthfi A', role: 'Fullstack Dev', gradient: 'from-cyan-500 to-blue-600' },
-            { name: 'M Fadhly R', role: 'Machine Learning', gradient: 'from-purple-500 to-pink-600' },
-            { name: 'Ummam Hoerussifa', role: 'Machine Learning', gradient: 'from-fuchsia-500 to-purple-600' },
-            { name: 'Rakandiya', role: 'Back-End Dev', gradient: 'from-sky-500 to-indigo-600' },
-            { name: 'Rangga Ali', role: 'IoT Developer', gradient: 'from-lime-500 to-emerald-600' },
-            { name: 'M Dzakkir Kilman', role: 'Front-End Dev', gradient: 'from-rose-500 to-red-600' },
-            { name: 'Faizal Azzriel', role: 'Developer', gradient: 'from-indigo-500 to-cyan-500' },
+            { name: 'Davi Hanan Luthfi', role: 'Fullstack Dev', gradient: 'from-cyan-500 to-blue-600', initial: 'DH' },
+            { name: 'M Fadhly R', role: 'Machine Learning', gradient: 'from-purple-500 to-pink-600', initial: 'MF' },
+            { name: 'Ummam Hoerussifa', role: 'Machine Learning', gradient: 'from-fuchsia-500 to-purple-600', initial: 'UH' },
+            { name: 'Rakandiya', role: 'Back-End Dev', gradient: 'from-sky-500 to-indigo-600', initial: 'R' },
+            { name: 'Rangga Ali', role: 'IoT Developer', gradient: 'from-lime-500 to-emerald-600', initial: 'RA' },
+            { name: 'M Dzakkir Kilman', role: 'Front-End Dev', gradient: 'from-rose-500 to-red-600', initial: 'MD' },
+            { name: 'Faizal Azzriel', role: 'Developer', gradient: 'from-indigo-500 to-cyan-500', initial: 'FA' },
         ]
     },
     {
         name: 'Creative',
         color: 'pink',
         members: [
-            { name: 'Najwa Ikhsaniyah', role: 'Desain Visual', gradient: 'from-pink-500 to-rose-600' },
-            { name: 'M Nazlan Rizqon', role: 'Desain Animasi', gradient: 'from-violet-500 to-fuchsia-600' },
+            { name: 'Najwa Ikhsaniyah', role: 'Desain Visual', gradient: 'from-pink-500 to-rose-600', initial: 'NI' },
+            { name: 'M Nazlan Rizqon', role: 'Desain Animasi', gradient: 'from-violet-500 to-fuchsia-600', initial: 'MN' },
         ]
     }
 ];
 
 const colorMap: Record<string, string> = {
-    emerald: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-    blue: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-    pink: 'text-pink-400 bg-pink-500/10 border-pink-500/20',
+    emerald: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/5',
+    blue: 'text-blue-400 border-blue-500/30 bg-blue-500/5',
+    pink: 'text-pink-400 border-pink-500/30 bg-pink-500/5',
 };
 
 /* ─── Components ─── */
-const MemberCard: React.FC<{ member: any; small?: boolean }> = ({ member, small }) => (
-    <div className={`relative group ${small ? 'w-48 p-4' : 'w-64 p-6'} rounded-2xl border border-white/10 bg-neutral-900/80 backdrop-blur-sm hover:border-indigo-500/50 hover:bg-neutral-800/80 transition-all duration-300 z-10`}>
-        {/* Glow Effect */}
-        <div className={`absolute -inset-0.5 rounded-2xl bg-gradient-to-br ${member.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-md`} />
+const NodeCard: React.FC<{
+    member: any;
+    isHead?: boolean;
+    className?: string;
+}> = ({ member, isHead, className = '' }) => (
+    <div className={`relative group flex flex-col items-center z-10 ${className}`}>
+        {/* Glow Background */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${member.gradient} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500 -z-10 rounded-full`} />
 
-        <div className="relative flex flex-col items-center text-center">
-            <div className={`${small ? 'w-12 h-12 text-lg' : 'w-16 h-16 text-2xl'} rounded-full bg-gradient-to-br ${member.gradient} flex items-center justify-center font-bold text-white mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                {member.image || member.name.charAt(0)}
+        {/* Card Content */}
+        <div className={`
+            relative overflow-hidden
+            flex flex-col items-center justify-center text-center
+            transition-all duration-300 ease-out
+            backdrop-blur-md border border-white/10
+            group-hover:border-white/30 group-hover:scale-105 group-hover:-translate-y-1
+            shadow-lg shadow-black/20
+            ${isHead ? 'w-48 h-48 rounded-full' : 'w-40 p-4 rounded-xl bg-neutral-900/80'}
+        `}>
+            {/* Avatar / Initial */}
+            <div className={`
+                ${isHead ? 'w-20 h-20 text-3xl mb-3' : 'w-12 h-12 text-lg mb-2'}
+                rounded-full bg-gradient-to-br ${member.gradient}
+                flex items-center justify-center font-bold text-white
+                shadow-inner ring-2 ring-white/10
+            `}>
+                {member.initial}
             </div>
-            <h4 className={`font-bold text-white ${small ? 'text-sm' : 'text-lg'} group-hover:text-indigo-300 transition-colors`}>
+
+            {/* Text Info */}
+            <h4 className={`font-bold text-white leading-tight ${isHead ? 'text-xl px-4' : 'text-sm'}`}>
                 {member.name}
             </h4>
-            <p className={`text-gray-400 ${small ? 'text-xs' : 'text-sm'}`}>{member.role}</p>
+            <p className={`text-white/60 font-medium ${isHead ? 'text-sm mt-1' : 'text-xs mt-0.5'}`}>
+                {member.role}
+            </p>
         </div>
     </div>
 );
 
-
+const DivisionLabel: React.FC<{ name: string; color: string }> = ({ name, color }) => (
+    <div className={`
+        px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider
+        border backdrop-blur-md shadow-lg z-10
+        transition-transform duration-300 hover:scale-110
+        ${colorMap[color]}
+    `}>
+        {name}
+    </div>
+);
 
 /* ─── Main Section ─── */
 const Team: React.FC = () => {
@@ -77,48 +108,35 @@ const Team: React.FC = () => {
     const treeRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!sectionRef.current || !treeRef.current) return;
-
         const ctx = gsap.context(() => {
-            // Header Animation
-            gsap.fromTo('.team-header',
-                { y: 50, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.team-header', start: 'top 85%' } }
-            );
+            // Initial States for Animation
+            gsap.set('.tree-line', { scale: 0, opacity: 0 });
+            gsap.set('.tree-node', { y: 30, opacity: 0 });
 
-            // Tree Animation
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: treeRef.current,
-                    start: 'top 75%',
+                    start: 'top 80%',
                     end: 'bottom bottom',
                     toggleActions: 'play none none reverse'
                 }
             });
 
-            // 1. Head appears
-            tl.fromTo('.node-head', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' });
-
-            // 2. Trunk grows down
-            tl.fromTo('.line-trunk', { height: 0 }, { height: '3rem', duration: 0.3 });
-
-            // 3. Branches grow horizontal
-            tl.fromTo('.line-branch', { scaleX: 0 }, { scaleX: 1, duration: 0.4 });
-
-            // 4. Connectors grow down
-            tl.fromTo('.line-connector', { height: 0 }, { height: '2rem', duration: 0.3 });
-
-            // 5. Divisions appear
-            tl.fromTo('.node-division',
-                { y: 20, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.4, stagger: 0.1 }
-            );
-
-            // 6. Members appear
-            tl.fromTo('.node-member',
-                { y: 10, opacity: 0, scale: 0.9 },
-                { y: 0, opacity: 1, scale: 1, duration: 0.4, stagger: 0.05 }
-            );
+            // sequence
+            // 1. Head
+            tl.to('.node-head', { y: 0, opacity: 1, duration: 0.6, ease: 'back.out(1.5)' })
+                // 2. Trunk Line
+                .to('.line-trunk', { scale: 1, opacity: 1, duration: 0.4 }, '-=0.2')
+                // 3. Horizontal Branch
+                .to('.line-branch', { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.inOut' }, '-=0.2')
+                // 4. Division Connectors
+                .to('.line-connector-div', { scaleY: 1, opacity: 1, duration: 0.3, stagger: 0.1 }, '-=0.3')
+                // 5. Division Labels
+                .to('.node-division', { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: 'back.out(1.2)' }, '-=0.2')
+                // 6. Member Connectors
+                .to('.line-connector-member', { scaleY: 1, opacity: 1, duration: 0.3 }, '-=0.2')
+                // 7. Members
+                .to('.node-member', { y: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: 'back.out(1.1)' }, '-=0.2');
 
         }, sectionRef);
 
@@ -126,75 +144,67 @@ const Team: React.FC = () => {
     }, []);
 
     return (
-        <section id="team" ref={sectionRef} className="py-32 bg-neutral-950 text-white relative overflow-hidden min-h-screen">
-            {/* Background Elements */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05)_0%,transparent_70%)] pointer-events-none" />
+        <section id="team" ref={sectionRef} className="py-24 bg-neutral-950 text-white relative overflow-hidden min-h-screen">
+            {/* Background Grid */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0a0a0a_80%)] pointer-events-none" />
 
-            <div className="container mx-auto px-4">
-                {/* Header */}
-                <div className="team-header text-center mb-16">
-                    <h2 className="text-sm font-semibold tracking-widest text-indigo-500 uppercase mb-4">Tim Kami</h2>
-                    <h3 className="text-3xl md:text-5xl font-bold mb-4">Struktur Organisasi</h3>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        Hirarki profesional yang solid untuk menghadirkan solusi terbaik.
-                    </p>
+            <div className="container mx-auto px-4 relative z-10">
+                <div className="text-center mb-20">
+                    <h2 className="text-indigo-500 font-semibold tracking-wide uppercase text-sm mb-3">Our Squad</h2>
+                    <h3 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50">
+                        Organization Structure
+                    </h3>
                 </div>
 
-                {/* Organization Tree */}
-                <div ref={treeRef} className="flex flex-col items-center relative z-10 w-full overflow-x-auto pb-12">
+                <div ref={treeRef} className="flex flex-col items-center w-full max-w-7xl mx-auto overflow-x-auto pb-12 px-4 pointer-events-auto">
+                    {/* ─── LEVEL 1: HEAD ─── */}
+                    <div className="flex flex-col items-center relative gap-8">
+                        <NodeCard member={head} isHead className="tree-node node-head" />
 
-                    {/* LEVEL 1: HEAD */}
-                    <div className="flex flex-col items-center node-head">
-                        <MemberCard member={head} />
-                        <div className="line-trunk w-px bg-white/20 h-12" />
+                        {/* Main Trunk Line */}
+                        <div className="tree-line line-trunk w-px h-12 bg-gradient-to-b from-indigo-500 to-indigo-500/50 origin-top" />
                     </div>
 
-                    {/* CONNECTORS LINES */}
-                    <div className="relative flex justify-center w-full max-w-5xl">
-                        {/* Horizontal Line connecting 3 branches */}
-                        <div className="line-branch absolute top-0 left-[16%] right-[16%] h-px bg-white/20 origin-center" />
+                    {/* ─── BRANCHING ─── */}
+                    <div className="relative w-full flex justify-center">
+                        {/* Horizontal Crossbar (Connecting Divisions) */}
+                        {/* Width is approximately calculated to span between first and last division centers */}
+                        <div className="hidden md:block absolute top-0 left-[20%] right-[20%] h-px bg-indigo-500/30 tree-line line-branch origin-center" />
 
-                        {/* Vertical Connectors */}
-                        <div className="w-full flex justify-around">
-                            <div className="flex flex-col items-center">
-                                <div className="line-connector w-px bg-white/20 h-8" />
-                            </div>
-                            <div className="flex flex-col items-center">
-                                <div className="line-connector w-px bg-white/20 h-8" />
-                            </div>
-                            <div className="flex flex-col items-center">
-                                <div className="line-connector w-px bg-white/20 h-8" />
-                            </div>
-                        </div>
-                    </div>
+                        {/* Connectors for Mobile (Simplified vertical stack handled via flex-col on wrapper if needed, but here we use grid) */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 w-full">
 
-                    {/* LEVEL 2: DIVISIONS */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl mt-0">
-                        {divisions.map((division, i) => (
-                            <div key={i} className="flex flex-col items-center node-division">
-                                {/* Division Label */}
-                                <div className={`px-6 py-2 rounded-full border mb-8 backdrop-blur-md font-bold ${colorMap[division.color]}`}>
-                                    {division.name}
-                                </div>
+                            {divisions.map((division, idx) => (
+                                <div key={idx} className="flex flex-col items-center relative">
+                                    {/* Vertical Line from Crossbar to Division Label */}
+                                    {/* Mobile: Hidden, Desktop: Visible */}
+                                    <div className="hidden md:block tree-line line-connector-div w-px h-8 bg-indigo-500/30 origin-top mb-4" />
 
-                                {/* Members Grid */}
-                                <div className="flex flex-col gap-6 items-center w-full">
-                                    {/* Line to Division Members */}
-                                    <div className="w-px bg-white/10 h-8 -mt-8 mb-0" />
+                                    {/* Division Label */}
+                                    <div className="tree-node node-division mb-8">
+                                        <DivisionLabel name={division.name} color={division.color} />
+                                    </div>
 
-                                    <div className="flex flex-wrap justify-center gap-4">
-                                        {division.members.map((member, j) => (
-                                            <div key={j} className="node-member relative">
-                                                {/* Connecting line for siblings (visual simplified) */}
-                                                <MemberCard member={member} small />
-                                            </div>
-                                        ))}
+                                    {/* Members Container */}
+                                    <div className="flex flex-col items-center gap-6 w-full relative">
+                                        {/* Connector Line to Members */}
+                                        <div className="tree-line line-connector-member w-px h-6 bg-white/10 origin-top -mt-4" />
+
+                                        {/* Members Grid/List */}
+                                        <div className="flex flex-wrap justify-center gap-6">
+                                            {division.members.map((member, mIdx) => (
+                                                <div key={mIdx} className="tree-node node-member relative group/line">
+                                                    {/* Small subtle line connecting to parent in mobile/wrap view could go here */}
+                                                    <NodeCard member={member} />
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-
                 </div>
             </div>
         </section>

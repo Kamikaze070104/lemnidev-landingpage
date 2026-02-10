@@ -3,9 +3,6 @@ import { Github, Instagram, Mail, ArrowUpRight } from 'lucide-react';
 import logo from '../assets/logoA.png';
 
 const Footer: React.FC = () => {
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
 
     return (
         <footer className="bg-neutral-900 border-t border-white/10 relative">
