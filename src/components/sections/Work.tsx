@@ -3,11 +3,11 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight } from 'lucide-react';
 
-import proj1 from '../../assets/projek/1.png';
-import proj2 from '../../assets/projek/2.png';
-import proj3 from '../../assets/projek/3.png';
-import proj4 from '../../assets/projek/4.png';
-import proj5 from '../../assets/projek/5.png';
+import proj1 from '../../assets/projek/1.webp';
+import proj2 from '../../assets/projek/2.webp';
+import proj3 from '../../assets/projek/3.webp';
+import proj4 from '../../assets/projek/4.webp';
+import proj5 from '../../assets/projek/5.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 

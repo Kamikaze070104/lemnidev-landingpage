@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
-import logo from '../assets/logoB.png';
+import logo from '../assets/logoB.webp';
 
 const LOADING_DURATION = 2200;
 
