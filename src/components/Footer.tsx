@@ -5,12 +5,15 @@ import logo from '../assets/logoA.webp';
 const Footer: React.FC = () => {
 
     return (
-        <footer className="bg-neutral-900 border-t border-white/10 relative">
-            <div className="container mx-auto px-4 py-16">
+        <footer className="bg-neutral-900 border-t border-white/10 relative overflow-hidden">
+            {/* Background Glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none" />
+
+            <div className="container mx-auto px-4 py-16 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
                     {/* Brand */}
                     <div className="md:col-span-2">
-                        <img src={logo} alt="Lemnidev Logo" className="h-30 w-auto invert brightness-0 mb-6" />
+                        <img src={logo} alt="Lemnidev Logo" className="h-24 w-auto invert brightness-0 mb-6" />
                         <p className="text-gray-400 text-sm max-w-sm leading-relaxed">
                             Tim teknologi terpercaya yang menghadirkan solusi digital dan AI melalui pengembangan aplikasi dan workflow cerdas yang modern dan efisien.
                         </p>

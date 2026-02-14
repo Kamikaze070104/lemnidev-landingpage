@@ -103,7 +103,11 @@ const Navbar: React.FC = () => {
                 </div>
 
                 {/* Mobile Menu Button */}
-                <button className="lg:hidden text-white p-2" onClick={toggleMenu}>
+                <button
+                    className="lg:hidden text-white p-2"
+                    onClick={toggleMenu}
+                    aria-label={isOpen ? "Close menu" : "Open menu"}
+                >
                     {isOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
             </div>

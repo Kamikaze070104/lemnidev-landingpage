@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Github } from 'lucide-react';
 
 import proj1 from '../../assets/projek/1.webp';
 import proj2 from '../../assets/projek/2.webp';
@@ -129,6 +129,18 @@ const Work: React.FC = () => {
                     {filteredProjects.map((project) => (
                         <TiltCard key={project.id} project={project} />
                     ))}
+                </div>
+
+                <div className="mt-12 flex justify-center">
+                    <a
+                        href="https://github.com/JSS-DEV-ONLY"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 border border-white/10 rounded-full hover:bg-neutral-800 hover:border-indigo-500/50 transition-all duration-300 group"
+                    >
+                        <Github className="w-5 h-5 text-gray-400 group-hover:text-indigo-400 transition-colors" />
+                        <span className="text-gray-300 group-hover:text-white font-medium">See more on GitHub</span>
+                    </a>
                 </div>
             </div>
         </section>

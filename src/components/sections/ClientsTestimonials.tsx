@@ -3,12 +3,32 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Quote, Star } from 'lucide-react';
 
+// Import Logos
+import logoVoyag from '../../assets/logo/logo-voyag-velasco.png';
+import logoJSS from '../../assets/logo/LogoJSS.png';
+import logoOlahraga from '../../assets/logo/olahraga.webp';
+import logoSehat from '../../assets/logo/sehat.png';
+import logoIKB from '../../assets/logo/IKB.png';
+import logoVoyagStuff from '../../assets/logo/voyagstuff-logo.jpg';
+import RAV from '../../assets/logo/RAV.png';
+import edubot from '../../assets/logo/edubot.jpg';
+import solusi from '../../assets/logo/solusi.png';
+import pyromi from '../../assets/logo/pyromi.jpg';
+
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── Client Logos (text-based for now) ─── */
-const clients = [
-    'Voyag Velasco', 'PT. JSS', 'Olahraga Viral', 'Solusi Sehat',
-    'Voyag Velasco', 'PT. JSS', 'Olahraga Viral', 'Solusi Sehat',
+/* ─── Client Logos Data ─── */
+const clientLogos = [
+    { name: 'Voyag Velasco', src: logoVoyag },
+    { name: 'PT. Jaya Sinergi Sentosa', src: logoJSS },
+    { name: 'Olahraga Viral', src: logoOlahraga },
+    { name: 'Solusi Sehat', src: logoSehat },
+    { name: 'IKB', src: logoIKB },
+    { name: 'Voyag Stuff', src: logoVoyagStuff },
+    { name: 'RAV', src: RAV },
+    { name: 'Edubot', src: edubot },
+    { name: 'Solusi', src: solusi },
+    { name: 'Pyromi', src: pyromi },
 ];
 
 /* ─── Testimonials Data ─── */
@@ -17,15 +37,17 @@ const testimonials = [
         name: 'Voyag Velasco',
         role: 'CEO, Voyag Marketplace',
         text: 'Lemnidev membantu kami membangun platform e-commerce yang robust dan scalable. Tim yang responsif dan sangat profesional.',
-        rating: 5,
+        rating: 4,
         gradient: 'from-indigo-500 to-cyan-500',
+        logo: logoVoyag,
     },
     {
-        name: 'PT. Jaya Sinergi',
+        name: 'PT. Jaya Sejahtera Suksesindo',
         role: 'Manager, PT JSS',
         text: 'Company profile yang dibuat sangat modern dan merepresentasikan perusahaan kami dengan baik. Proses pengerjaan cepat dan komunikatif.',
         rating: 5,
         gradient: 'from-purple-500 to-pink-500',
+        logo: logoJSS,
     },
     {
         name: 'Olahraga Viral',
@@ -33,28 +55,25 @@ const testimonials = [
         text: 'Platform survey kami berjalan sangat smooth berkat kerja keras tim Lemnidev. Highly recommended untuk kebutuhan digital!',
         rating: 5,
         gradient: 'from-emerald-500 to-teal-500',
+        logo: logoOlahraga,
     },
 ];
 
-/* ─── Infinite Marquee ─── */
-const LogoMarquee: React.FC = () => (
-    <div className="relative overflow-hidden py-12">
-        {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-neutral-950 to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-neutral-950 to-transparent z-10" />
-
-        <div className="flex animate-marquee whitespace-nowrap">
-            {[...clients, ...clients].map((client, i) => (
+/* ─── Logo Grid Component ─── */
+const LogoGrid: React.FC = () => (
+    <div className="py-12 border-t border-white/10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 md:gap-13 items-center justify-items-center">
+            {clientLogos.map((client, i) => (
                 <div
                     key={i}
-                    className="mx-8 md:mx-16 flex items-center gap-3 flex-shrink-0"
+                    className="group relative w-full flex items-center justify-center p-4 grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-500 cursor-default"
                 >
-                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-lg font-bold text-indigo-400">
-                        {client.charAt(0)}
-                    </div>
-                    <span className="text-lg md:text-xl font-semibold text-gray-500 hover:text-white transition-colors duration-300">
-                        {client}
-                    </span>
+                    <img
+                        src={client.src}
+                        alt={client.name}
+                        className="max-h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-110"
+                        loading="lazy"
+                    />
                 </div>
             ))}
         </div>
@@ -87,8 +106,12 @@ const TestimonialCard: React.FC<{ testimonial: typeof testimonials[0] }> = ({ te
 
             {/* Author */}
             <div className="flex items-center gap-4">
-                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${testimonial.gradient} flex items-center justify-center text-white font-bold text-lg`}>
-                    {testimonial.name.charAt(0)}
+                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-2 overflow-hidden flex-shrink-0">
+                    <img
+                        src={testimonial.logo}
+                        alt={testimonial.name}
+                        className="w-full h-full object-contain"
+                    />
                 </div>
                 <div>
                     <h4 className="font-bold text-white">{testimonial.name}</h4>
@@ -135,13 +158,16 @@ const ClientsTestimonials: React.FC = () => {
     return (
         <section id="clients" ref={sectionRef} className="py-32 bg-neutral-950 text-white relative overflow-hidden">
             <div className="container mx-auto px-4">
-                {/* Client Logos */}
-                <div className="text-center mb-4">
-                    <h2 className="text-sm font-semibold tracking-widest text-indigo-500 uppercase mb-4">
-                        Dipercaya Oleh
-                    </h2>
+                {/* Client Logos / List */}
+                <div className="mb-12">
+                    <div className="text-center mb-12">
+                        <h2 className="text-sm font-semibold tracking-widest text-indigo-500 uppercase mb-4">
+                            Dipercaya Oleh
+                        </h2>
+                    </div>
+
+                    <LogoGrid />
                 </div>
-                <LogoMarquee />
 
                 {/* Testimonials */}
                 <div className="mt-20 mb-8 text-center">

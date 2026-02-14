@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Code2, Bot, Link2, Settings } from 'lucide-react';
+import { Code2, Bot, Link2, Settings, Target } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -45,7 +45,17 @@ const services = [
         glowColor: 'rgba(245, 158, 11, 0.15)',
         span: 'md:col-span-2 md:row-span-1',
         tags: ['Monitoring', 'Optimization', 'Support'],
-    }
+    },
+    {
+        title: 'Adaptif & fleksibel',
+        description: 'Menyesuaikan kebutuhan client dengan solusi yang paling efektif dan efisien.',
+        number: '05',
+        icon: Target,
+        gradient: 'from-cyan-400 to-blue-400',
+        glowColor: 'rgba(245, 158, 11, 0.15)',
+        span: 'md:col-span-1 md:row-span-1',
+        tags: ['Custom', 'Flexibel', 'Efektif'],
+    },
 ];
 
 const BentoCard: React.FC<{ service: typeof services[0]; index: number }> = ({ service, index }) => {

@@ -260,15 +260,8 @@
   animation-play-state: paused;
 }
 
-/* ─── Team Carousel ─── */
-.team-carousel {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.team-carousel::-webkit-scrollbar {
-  display: none;
-}
+/* ─── Org Tree ─── */
+/* Org tree styles are now handled via Tailwind utilities in Team.tsx */
 
 /* ─── Loading Screen ─── */
 @keyframes loader-pulse {

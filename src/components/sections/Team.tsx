@@ -1,211 +1,186 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── Data: Organization Hierarchy ─── */
-const head = {
-    name: 'Bentar Ristianto',
-    role: 'Head of Solution',
-    gradient: 'from-indigo-500 to-violet-600',
-    initial: 'B'
-};
+/* ─── Types ─── */
+interface TeamMember {
+    name: string;
+    role: string;
+    initial: string;
+    gradient: string;
+    github: string;
+    image: string;
+}
 
-const divisions = [
-    {
-        name: 'Operations',
-        color: 'emerald',
-        members: [
-            { name: 'Muh. Athif Fadh', role: 'Keuangan', gradient: 'from-emerald-500 to-teal-600', initial: 'MA' },
-            { name: 'Agung Fathul', role: 'Human Relation', gradient: 'from-amber-500 to-orange-600', initial: 'AF' },
-        ]
-    },
-    {
-        name: 'Engineering',
-        color: 'blue',
-        members: [
-            { name: 'Davi Hanan Luthfi', role: 'Fullstack Dev', gradient: 'from-cyan-500 to-blue-600', initial: 'DH' },
-            { name: 'M Fadhly R', role: 'Machine Learning', gradient: 'from-purple-500 to-pink-600', initial: 'MF' },
-            { name: 'Ummam Hoerussifa', role: 'Machine Learning', gradient: 'from-fuchsia-500 to-purple-600', initial: 'UH' },
-            { name: 'Rakandiya', role: 'Back-End Dev', gradient: 'from-sky-500 to-indigo-600', initial: 'R' },
-            { name: 'Rangga Ali', role: 'IoT Developer', gradient: 'from-lime-500 to-emerald-600', initial: 'RA' },
-            { name: 'M Dzakkir Kilman', role: 'Front-End Dev', gradient: 'from-rose-500 to-red-600', initial: 'MD' },
-            { name: 'Faizal Azzriel', role: 'Developer', gradient: 'from-indigo-500 to-cyan-500', initial: 'FA' },
-        ]
-    },
-    {
-        name: 'Creative',
-        color: 'pink',
-        members: [
-            { name: 'Najwa Ikhsaniyah', role: 'Desain Visual', gradient: 'from-pink-500 to-rose-600', initial: 'NI' },
-            { name: 'M Nazlan Rizqon', role: 'Desain Animasi', gradient: 'from-violet-500 to-fuchsia-600', initial: 'MN' },
-        ]
-    }
+/* ─── Data: Flattened Lists ─── */
+const row1: TeamMember[] = [
+    { name: 'Bentar Ristianto', role: 'Head of Solution', initial: 'B', gradient: 'from-indigo-500 to-violet-600', github: 'https://github.com/BentarCr00s', image: '/Bentar.jpg' },
+    { name: 'Muh. Athif Fadh', role: 'Keuangan', initial: 'MA', gradient: 'from-emerald-500 to-teal-600', github: 'https://github.com/thiffadl', image: '/Athif.png' },
+    { name: 'Agung Fathul', role: 'Human Relation', initial: 'AF', gradient: 'from-amber-500 to-orange-600', github: 'https://github.com/AgungFathul01', image: '/Agung.png' },
+    { name: 'Najwa Ikhsaniyah', role: 'Desain Visual', initial: 'NI', gradient: 'from-pink-500 to-rose-600', github: '#', image: '/Najwa.png' },
+    { name: 'M Nazlan Rizqon', role: 'Desain Animasi', initial: 'MN', gradient: 'from-violet-500 to-fuchsia-600', github: '#', image: '/Nazlan.png' },
 ];
 
-const colorMap: Record<string, string> = {
-    emerald: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/5',
-    blue: 'text-blue-400 border-blue-500/30 bg-blue-500/5',
-    pink: 'text-pink-400 border-pink-500/30 bg-pink-500/5',
-};
+const row2: TeamMember[] = [
+    { name: 'Davi Hanan Luthfi', role: 'Fullstack Dev', initial: 'DH', gradient: 'from-cyan-500 to-blue-600', github: 'https://github.com/NekoMorie', image: '/Davi.png' },
+    { name: 'Rakandiya', role: 'Back-End Dev', initial: 'R', gradient: 'from-sky-500 to-indigo-600', github: 'https://github.com/Rakandiya', image: '/Rakandiya.jpg' },
+    { name: 'M Fadhly R', role: 'Machine Learning', initial: 'MF', gradient: 'from-purple-500 to-pink-600', github: 'https://github.com/fadhlyrafi', image: '/Fadhly.jpg' },
+    { name: 'Ummam Hoerussifa', role: 'Machine Learning', initial: 'UH', gradient: 'from-fuchsia-500 to-purple-600', github: 'https://github.com/Sumems', image: '/Ummam.jpg' },
+    { name: 'M Dzakkir Kilman', role: 'Front-End Dev', initial: 'MD', gradient: 'from-rose-500 to-red-600', github: 'https://github.com/dzakkirsolihin', image: '/Dzakkir.png' },
+    { name: 'Faizal Azzriel', role: 'Developer', initial: 'FA', gradient: 'from-indigo-500 to-cyan-500', github: 'https://github.com/Kamikaze070104', image: '/Faizal.png' },
+    { name: 'Rangga Ali', role: 'IoT Developer', initial: 'RA', gradient: 'from-lime-500 to-emerald-600', github: '#', image: '/Rangga.png' },
+];
 
-/* ─── Components ─── */
-const NodeCard: React.FC<{
-    member: any;
-    isHead?: boolean;
-    className?: string;
-}> = ({ member, isHead, className = '' }) => (
-    <div className={`relative group flex flex-col items-center z-10 ${className}`}>
-        {/* Glow Background */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${member.gradient} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500 -z-10 rounded-full`} />
+/* ─── GitHub Icon SVG ─── */
+const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={className}
+    >
+        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+        <path d="M9 18c-4.51 2-5-2-7-2" />
+    </svg>
+);
 
-        {/* Card Content */}
-        <div className={`
-            relative overflow-hidden
-            flex flex-col items-center justify-center text-center
-            transition-all duration-300 ease-out
-            backdrop-blur-md border border-white/10
-            group-hover:border-white/30 group-hover:scale-105 group-hover:-translate-y-1
-            shadow-lg shadow-black/20
-            ${isHead ? 'w-48 h-48 rounded-full' : 'w-40 p-4 rounded-xl bg-neutral-900/80'}
-        `}>
-            {/* Avatar / Initial */}
-            <div className={`
-                ${isHead ? 'w-20 h-20 text-3xl mb-3' : 'w-12 h-12 text-lg mb-2'}
-                rounded-full bg-gradient-to-br ${member.gradient}
-                flex items-center justify-center font-bold text-white
-                shadow-inner ring-2 ring-white/10
-            `}>
-                {member.initial}
-            </div>
+/* ─── Capsule Card ─── */
+const TeamCard: React.FC<{ member: TeamMember }> = ({ member }) => (
+    <div className="group relative flex items-center gap-3 md:gap-5 p-2 pr-4 md:p-3 md:pr-8 rounded-full bg-neutral-900/50 border border-white/[0.08] backdrop-blur-sm transition-all duration-300 hover:bg-neutral-800 hover:border-indigo-500/30 hover:scale-[1.02] cursor-default min-w-[260px] md:min-w-[380px]">
 
-            {/* Text Info */}
-            <h4 className={`font-bold text-white leading-tight ${isHead ? 'text-xl px-4' : 'text-sm'}`}>
-                {member.name}
-            </h4>
-            <p className={`text-white/60 font-medium ${isHead ? 'text-sm mt-1' : 'text-xs mt-0.5'}`}>
-                {member.role}
-            </p>
+        {/* Hover Glow Effect */}
+        <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${member.gradient} opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-500 -z-10`} />
+
+        {/* Avatar - Image */}
+        <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full bg-neutral-800 flex items-center justify-center overflow-hidden flex-shrink-0 border-2 border-neutral-700/50 relative z-10`}>
+            <img
+                src={member.image}
+                alt={member.name}
+                className="w-full h-full object-cover rounded-full"
+                loading="lazy"
+            />
         </div>
+
+        {/* Info - Enlarge text */}
+        <div className="flex-1 min-w-0">
+            <h4 className="text-white font-bold text-sm md:text-lg truncate">{member.name}</h4>
+            <p className="text-indigo-400 text-xs md:text-sm font-medium truncate">{member.role}</p>
+        </div>
+
+        {/* GitHub Action */}
+        <a
+            href={member.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-500 hover:text-white transition-colors duration-200 p-1.5 md:p-2 hover:bg-white/10 rounded-full"
+            aria-label={`GitHub ${member.name}`}
+        >
+            <GithubIcon className="w-5 h-5 md:w-6 md:h-6" />
+        </a>
     </div>
 );
 
-const DivisionLabel: React.FC<{ name: string; color: string }> = ({ name, color }) => (
-    <div className={`
-        px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider
-        border backdrop-blur-md shadow-lg z-10
-        transition-transform duration-300 hover:scale-110
-        ${colorMap[color]}
-    `}>
-        {name}
-    </div>
-);
+/* ─── Marquee Row ─── */
+const MarqueeRow: React.FC<{ items: TeamMember[]; direction: 'left' | 'right'; speed?: number }> = ({ items, direction, speed = 60 }) => {
+    // Duplicate 4 times to ensure seamless infinite loop
+    const doubled = [...items, ...items, ...items, ...items];
+    const animClass = direction === 'left' ? 'animate-marquee-left' : 'animate-marquee-right';
+
+    return (
+        <div className="flex overflow-hidden py-4 -my-2 select-none">
+            <div
+                className={`flex gap-8 whitespace-nowrap ${animClass}`}
+                style={{ animationDuration: `${speed}s` }}
+            >
+                {doubled.map((item, i) => (
+                    <TeamCard key={i} member={item} />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 /* ─── Main Section ─── */
 const Team: React.FC = () => {
-    const sectionRef = useRef<HTMLDivElement>(null);
-    const treeRef = useRef<HTMLDivElement>(null);
+    const sectionRef = React.useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    React.useEffect(() => {
+        if (!sectionRef.current) return;
         const ctx = gsap.context(() => {
-            // Initial States for Animation
-            gsap.set('.tree-line', { scale: 0, opacity: 0 });
-            gsap.set('.tree-node', { y: 30, opacity: 0 });
-
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: treeRef.current,
-                    start: 'top 80%',
-                    end: 'bottom bottom',
-                    toggleActions: 'play none none reverse'
+            // Header animations
+            gsap.fromTo(
+                '.team-header',
+                { y: 30, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: '.team-header',
+                        start: 'top 85%',
+                    }
                 }
-            });
+            );
 
-            // sequence
-            // 1. Head
-            tl.to('.node-head', { y: 0, opacity: 1, duration: 0.6, ease: 'back.out(1.5)' })
-                // 2. Trunk Line
-                .to('.line-trunk', { scale: 1, opacity: 1, duration: 0.4 }, '-=0.2')
-                // 3. Horizontal Branch
-                .to('.line-branch', { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.inOut' }, '-=0.2')
-                // 4. Division Connectors
-                .to('.line-connector-div', { scaleY: 1, opacity: 1, duration: 0.3, stagger: 0.1 }, '-=0.3')
-                // 5. Division Labels
-                .to('.node-division', { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: 'back.out(1.2)' }, '-=0.2')
-                // 6. Member Connectors
-                .to('.line-connector-member', { scaleY: 1, opacity: 1, duration: 0.3 }, '-=0.2')
-                // 7. Members
-                .to('.node-member', { y: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: 'back.out(1.1)' }, '-=0.2');
-
+            // Marquee fade-in
+            gsap.fromTo(
+                '.team-marquee-container',
+                { opacity: 0, y: 20 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    delay: 0.2,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: '.team-marquee-container',
+                        start: 'top 90%',
+                    }
+                }
+            );
         }, sectionRef);
-
         return () => ctx.revert();
     }, []);
 
     return (
-        <section id="team" ref={sectionRef} className="py-24 bg-neutral-950 text-white relative overflow-hidden min-h-screen">
-            {/* Background Grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0a0a0a_80%)] pointer-events-none" />
+        <section id="team" ref={sectionRef} className="py-32 bg-neutral-950 text-white relative overflow-hidden">
+            {/* Background texture */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,transparent_0%,#0a0a0a_70%)] pointer-events-none" />
 
-            <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center mb-20">
-                    <h2 className="text-indigo-500 font-semibold tracking-wide uppercase text-sm mb-3">Our Squad</h2>
-                    <h3 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50">
-                        Organization Structure
-                    </h3>
-                </div>
+            {/* Header */}
+            <div className="container mx-auto px-4 mb-20 text-center relative z-10 team-header">
+                <h2 className="text-sm font-semibold tracking-widest text-indigo-500 uppercase mb-4">
+                    Our Squad
+                </h2>
+                <h3 className="text-4xl md:text-5xl font-bold mb-6">
+                    Tim Kami
+                </h3>
+                <p className="text-gray-400 max-w-2xl mx-auto">
+                    Orang-orang berbakat di balik setiap solusi digital yang kami ciptakan.
+                </p>
+            </div>
 
-                <div ref={treeRef} className="flex flex-col items-center w-full max-w-7xl mx-auto overflow-x-auto pb-12 px-4 pointer-events-auto">
-                    {/* ─── LEVEL 1: HEAD ─── */}
-                    <div className="flex flex-col items-center relative gap-8">
-                        <NodeCard member={head} isHead className="tree-node node-head" />
+            {/* Marquee Container - Increased gap between rows */}
+            <div className="relative w-full flex flex-col gap-16 team-marquee-container z-10">
+                {/* Fade edges */}
+                <div className="absolute left-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-r from-neutral-950 to-transparent z-20 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-l from-neutral-950 to-transparent z-20 pointer-events-none" />
 
-                        {/* Main Trunk Line */}
-                        <div className="tree-line line-trunk w-px h-12 bg-gradient-to-b from-indigo-500 to-indigo-500/50 origin-top" />
-                    </div>
+                {/* Row 1: Right direction - Slower speed */}
+                <MarqueeRow items={row1} direction="right" speed={80} />
 
-                    {/* ─── BRANCHING ─── */}
-                    <div className="relative w-full flex justify-center">
-                        {/* Horizontal Crossbar (Connecting Divisions) */}
-                        {/* Width is approximately calculated to span between first and last division centers */}
-                        <div className="hidden md:block absolute top-0 left-[20%] right-[20%] h-px bg-indigo-500/30 tree-line line-branch origin-center" />
-
-                        {/* Connectors for Mobile (Simplified vertical stack handled via flex-col on wrapper if needed, but here we use grid) */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 w-full">
-
-                            {divisions.map((division, idx) => (
-                                <div key={idx} className="flex flex-col items-center relative">
-                                    {/* Vertical Line from Crossbar to Division Label */}
-                                    {/* Mobile: Hidden, Desktop: Visible */}
-                                    <div className="hidden md:block tree-line line-connector-div w-px h-8 bg-indigo-500/30 origin-top mb-4" />
-
-                                    {/* Division Label */}
-                                    <div className="tree-node node-division mb-8">
-                                        <DivisionLabel name={division.name} color={division.color} />
-                                    </div>
-
-                                    {/* Members Container */}
-                                    <div className="flex flex-col items-center gap-6 w-full relative">
-                                        {/* Connector Line to Members */}
-                                        <div className="tree-line line-connector-member w-px h-6 bg-white/10 origin-top -mt-4" />
-
-                                        {/* Members Grid/List */}
-                                        <div className="flex flex-wrap justify-center gap-6">
-                                            {division.members.map((member, mIdx) => (
-                                                <div key={mIdx} className="tree-node node-member relative group/line">
-                                                    {/* Small subtle line connecting to parent in mobile/wrap view could go here */}
-                                                    <NodeCard member={member} />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                {/* Row 2: Left direction - Slower speed */}
+                <MarqueeRow items={row2} direction="left" speed={90} />
             </div>
         </section>
     );

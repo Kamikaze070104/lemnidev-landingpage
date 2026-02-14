@@ -1,54 +1,12 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import AnimatedGridBackground from '../ui/AnimatedGridBackground';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── Magnetic Button ─── */
-const MagneticButton: React.FC<{ children: React.ReactNode; href: string }> = ({ children, href }) => {
-    const btnRef = useRef<HTMLAnchorElement>(null);
-
-    const handleMouseMove = useCallback((e: React.MouseEvent) => {
-        if (!btnRef.current) return;
-        const rect = btnRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        gsap.to(btnRef.current, {
-            x: x * 0.3,
-            y: y * 0.3,
-            duration: 0.4,
-            ease: 'power2.out',
-        });
-    }, []);
-
-    const handleMouseLeave = useCallback(() => {
-        if (!btnRef.current) return;
-        gsap.to(btnRef.current, {
-            x: 0,
-            y: 0,
-            duration: 0.7,
-            ease: 'elastic.out(1, 0.3)',
-        });
-    }, []);
-
-    return (
-        <a
-            ref={btnRef}
-            href={href}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className="magnetic-btn inline-flex items-center px-8 py-4 bg-white text-neutral-950 font-bold rounded-full transition-all duration-300 group relative overflow-hidden"
-        >
-            <span className="magnetic-btn-bg" />
-            <span className="relative z-10 flex items-center">
-                {children}
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-            </span>
-        </a>
-    );
-};
+import MagneticButton from '../ui/MagneticButton';
 
 /* ─── Pre-rendered Heading Letters ─── */
 const HEADING_TEXT = 'LEMNIDEV';
@@ -210,11 +168,11 @@ const Hero: React.FC = () => {
 
                 {/* Subtitle */}
                 <p className="hero-subtitle text-lg md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed" style={{ opacity: 0 }}>
-                    Kami membantu organisasi membangun sistem digital yang{' '}
+                    Kami membantu organisasi dan perusahaan membangun sistem digital yang{' '}
                     <span className="text-indigo-400 font-medium">efisien</span>,{' '}
                     <span className="text-purple-400 font-medium">aman</span>, dan{' '}
                     <span className="text-violet-400 font-medium">berkelanjutan</span> dengan pengembangan
-                    aplikasi dan AI Workflow.
+                    aplikasi dan AI Workflow yang efektif.
                 </p>
 
                 {/* CTA */}
