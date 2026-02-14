@@ -16,21 +16,21 @@ interface TeamMember {
 
 /* ─── Data: Flattened Lists ─── */
 const row1: TeamMember[] = [
-    { name: 'Bentar Ristianto', role: 'Head of Solution', initial: 'B', gradient: 'from-indigo-500 to-violet-600', github: 'https://github.com/BentarCr00s', image: '/Bentar.jpg' },
-    { name: 'Muh. Athif Fadh', role: 'Keuangan', initial: 'MA', gradient: 'from-emerald-500 to-teal-600', github: 'https://github.com/thiffadl', image: '/Athif.png' },
-    { name: 'Agung Fathul', role: 'Human Relation', initial: 'AF', gradient: 'from-amber-500 to-orange-600', github: 'https://github.com/AgungFathul01', image: '/Agung.png' },
-    { name: 'Najwa Ikhsaniyah', role: 'Desain Visual', initial: 'NI', gradient: 'from-pink-500 to-rose-600', github: '#', image: '/Najwa.png' },
-    { name: 'M Nazlan Rizqon', role: 'Desain Animasi', initial: 'MN', gradient: 'from-violet-500 to-fuchsia-600', github: '#', image: '/Nazlan.png' },
+    { name: 'Bentar Ristianto', role: 'Head of Solution', initial: 'B', gradient: 'from-indigo-500 to-violet-600', github: 'https://github.com/BentarCr00s', image: '/Bentar.webp' },
+    { name: 'Muh. Athif Fadh', role: 'Keuangan', initial: 'MA', gradient: 'from-emerald-500 to-teal-600', github: 'https://github.com/thiffadl', image: '/Athif.webp' },
+    { name: 'Agung Fathul', role: 'Human Relation', initial: 'AF', gradient: 'from-amber-500 to-orange-600', github: 'https://github.com/AgungFathul01', image: '/Agung.webp' },
+    { name: 'Najwa Ikhsaniyah', role: 'Desain Visual', initial: 'NI', gradient: 'from-pink-500 to-rose-600', github: '#', image: '/Najwa.webp' },
+    { name: 'M Nazlan Rizqon', role: 'Desain Animasi', initial: 'MN', gradient: 'from-violet-500 to-fuchsia-600', github: '#', image: '/Nazlan.webp' },
 ];
 
 const row2: TeamMember[] = [
-    { name: 'Davi Hanan Luthfi', role: 'Fullstack Dev', initial: 'DH', gradient: 'from-cyan-500 to-blue-600', github: 'https://github.com/NekoMorie', image: '/Davi.png' },
-    { name: 'Rakandiya', role: 'Back-End Dev', initial: 'R', gradient: 'from-sky-500 to-indigo-600', github: 'https://github.com/Rakandiya', image: '/Rakandiya.jpg' },
-    { name: 'M Fadhly R', role: 'Machine Learning', initial: 'MF', gradient: 'from-purple-500 to-pink-600', github: 'https://github.com/fadhlyrafi', image: '/Fadhly.jpg' },
-    { name: 'Ummam Hoerussifa', role: 'Machine Learning', initial: 'UH', gradient: 'from-fuchsia-500 to-purple-600', github: 'https://github.com/Sumems', image: '/Ummam.jpg' },
-    { name: 'M Dzakkir Kilman', role: 'Front-End Dev', initial: 'MD', gradient: 'from-rose-500 to-red-600', github: 'https://github.com/dzakkirsolihin', image: '/Dzakkir.png' },
-    { name: 'Faizal Azzriel', role: 'Developer', initial: 'FA', gradient: 'from-indigo-500 to-cyan-500', github: 'https://github.com/Kamikaze070104', image: '/Faizal.png' },
-    { name: 'Rangga Ali', role: 'IoT Developer', initial: 'RA', gradient: 'from-lime-500 to-emerald-600', github: '#', image: '/Rangga.png' },
+    { name: 'Davi Hanan Luthfi', role: 'Fullstack Dev', initial: 'DH', gradient: 'from-cyan-500 to-blue-600', github: 'https://github.com/NekoMorie', image: '/Davi.webp' },
+    { name: 'Rakandiya', role: 'Back-End Dev', initial: 'R', gradient: 'from-sky-500 to-indigo-600', github: 'https://github.com/Rakandiya', image: '/Rakandiya.webp' },
+    { name: 'M Fadhly R', role: 'Machine Learning', initial: 'MF', gradient: 'from-purple-500 to-pink-600', github: 'https://github.com/fadhlyrafi', image: '/Fadhly.webp' },
+    { name: 'Ummam Hoerussifa', role: 'Machine Learning', initial: 'UH', gradient: 'from-fuchsia-500 to-purple-600', github: 'https://github.com/Sumems', image: '/Ummam.webp' },
+    { name: 'M Dzakkir Kilman', role: 'Front-End Dev', initial: 'MD', gradient: 'from-rose-500 to-red-600', github: 'https://github.com/dzakkirsolihin', image: '/Dzakkir.webp' },
+    { name: 'Faizal Azzriel', role: 'Developer', initial: 'FA', gradient: 'from-indigo-500 to-cyan-500', github: 'https://github.com/Kamikaze070104', image: '/Faizal.webp' },
+    { name: 'Rangga Ali', role: 'IoT Developer', initial: 'RA', gradient: 'from-lime-500 to-emerald-600', github: '#', image: '/Rangga.webp' },
 ];
 
 /* ─── GitHub Icon SVG ─── */

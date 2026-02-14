@@ -4,16 +4,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Quote, Star } from 'lucide-react';
 
 // Import Logos
-import logoVoyag from '../../assets/logo/logo-voyag-velasco.png';
-import logoJSS from '../../assets/logo/LogoJSS.png';
+import logoVoyag from '../../assets/logo/logo-voyag-velasco.webp';
+import logoJSS from '../../assets/logo/LogoJSS.webp';
 import logoOlahraga from '../../assets/logo/olahraga.webp';
-import logoSehat from '../../assets/logo/sehat.png';
-import logoIKB from '../../assets/logo/IKB.png';
-import logoVoyagStuff from '../../assets/logo/voyagstuff-logo.jpg';
-import RAV from '../../assets/logo/RAV.png';
-import edubot from '../../assets/logo/edubot.jpg';
-import solusi from '../../assets/logo/solusi.png';
-import pyromi from '../../assets/logo/pyromi.jpg';
+import logoSehat from '../../assets/logo/sehat.webp';
+import logoIKB from '../../assets/logo/IKB.webp';
+import logoVoyagStuff from '../../assets/logo/voyagstuff-logo.webp';
+import RAV from '../../assets/logo/RAV.webp';
+import edubot from '../../assets/logo/edubot.webp';
+import solusi from '../../assets/logo/solusi.webp';
+import pyromi from '../../assets/logo/pyromi.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
