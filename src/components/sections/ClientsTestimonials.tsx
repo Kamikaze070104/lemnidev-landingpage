@@ -4,16 +4,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Quote, Star } from 'lucide-react';
 
 // Import Logos
-import logoVoyag from '../../assets/logo/logo-voyag-velasco.webp';
-import logoJSS from '../../assets/logo/LogoJSS.webp';
-import logoOlahraga from '../../assets/logo/olahraga.webp';
-import logoSehat from '../../assets/logo/sehat.webp';
-import logoIKB from '../../assets/logo/IKB.webp';
-import logoVoyagStuff from '../../assets/logo/voyagstuff-logo.webp';
-import RAV from '../../assets/logo/RAV.webp';
-import edubot from '../../assets/logo/edubot.webp';
-import solusi from '../../assets/logo/solusi.webp';
-import pyromi from '../../assets/logo/pyromi.webp';
+import logoVoyag from '@/assets/logo/logo-voyag-velasco.webp';
+import logoJSS from '@/assets/logo/LogoJSS.webp';
+import logoOlahraga from '@/assets/logo/olahraga.webp';
+import logoSehat from '@/assets/logo/sehat.webp';
+import logoIKB from '@/assets/logo/IKB.webp';
+import logoVoyagStuff from '@/assets/logo/voyagstuff-logo.webp';
+import RAV from '@/assets/logo/RAV.webp';
+import edubot from '@/assets/logo/edubot.webp';
+import solusi from '@/assets/logo/solusi.webp';
+import pyromi from '@/assets/logo/pyromi.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -161,7 +161,7 @@ const ClientsTestimonials: React.FC = () => {
                 {/* Client Logos / List */}
                 <div className="mb-12">
                     <div className="text-center mb-12">
-                        <h2 className="text-sm font-semibold tracking-widest text-indigo-500 uppercase mb-4">
+                        <h2 className="text-sm font-semibold tracking-widest text-indigo-400 uppercase mb-4">
                             Dipercaya Oleh
                         </h2>
                     </div>

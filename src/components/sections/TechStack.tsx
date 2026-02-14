@@ -78,7 +78,7 @@ const TechStack: React.FC = () => {
         <section id="tech-stack" className="py-32 bg-neutral-950 text-white relative overflow-hidden">
             {/* Section header */}
             <div className="container mx-auto px-4 mb-16 text-center">
-                <h2 className="text-sm font-semibold tracking-widest text-indigo-500 uppercase mb-4">
+                <h2 className="text-sm font-semibold tracking-widest text-indigo-400 uppercase mb-4">
                     Teknologi
                 </h2>
                 <h3 className="text-3xl md:text-5xl font-bold mb-4">

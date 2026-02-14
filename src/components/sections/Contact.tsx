@@ -57,7 +57,7 @@ const Contact: React.FC = () => {
             </div>
 
             <div className="container mx-auto px-4 text-center relative z-10">
-                <h2 className="text-sm font-semibold tracking-widest text-indigo-500 uppercase mb-8">
+                <h2 className="text-sm font-semibold tracking-widest text-indigo-400 uppercase mb-8">
                     Hubungi Kami
                 </h2>
                 <h3 className="contact-heading text-5xl md:text-7xl lg:text-8xl font-bold mb-12 tracking-tighter">

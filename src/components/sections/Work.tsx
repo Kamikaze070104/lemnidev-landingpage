@@ -3,11 +3,11 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, Github } from 'lucide-react';
 
-import proj1 from '../../assets/projek/1.webp';
-import proj2 from '../../assets/projek/2.webp';
-import proj3 from '../../assets/projek/3.webp';
-import proj4 from '../../assets/projek/4.webp';
-import proj5 from '../../assets/projek/5.webp';
+import proj1 from '@/assets/projek/1.webp';
+import proj2 from '@/assets/projek/2.webp';
+import proj3 from '@/assets/projek/3.webp';
+import proj4 from '@/assets/projek/4.webp';
+import proj5 from '@/assets/projek/5.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,7 +56,7 @@ const TiltCard: React.FC<{ project: typeof projects[0] }> = ({ project }) => {
                         <span className="inline-block px-3 py-1 text-xs font-medium rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 mb-3">{project.category}</span>
                         <h4 className="text-2xl font-bold text-white mb-1">{project.title}</h4>
                     </div>
-                    <a href={project.link} target="_blank" rel="noopener noreferrer"
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.title}`}
                         className="bg-white text-neutral-950 p-3 rounded-full opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 hover:bg-indigo-500 hover:text-white flex-shrink-0">
                         <ArrowUpRight size={20} />
                     </a>
@@ -111,7 +111,7 @@ const Work: React.FC = () => {
         <section id="work" ref={sectionRef} className="py-32 bg-neutral-950 text-white">
             <div className="container mx-auto px-4">
                 <div className="mb-12">
-                    <h2 className="text-sm font-semibold tracking-widest text-indigo-500 uppercase mb-4">Proyek Kami</h2>
+                    <h2 className="text-sm font-semibold tracking-widest text-indigo-400 uppercase mb-4">Proyek Kami</h2>
                     <h3 className="work-heading text-4xl md:text-5xl font-bold mb-8">Karya Terbaru</h3>
                     <div className="work-filters flex flex-wrap gap-3">
                         {categories.map((cat) => (

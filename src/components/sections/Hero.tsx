@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronDown } from 'lucide-react';
-import AnimatedGridBackground from '../ui/AnimatedGridBackground';
+import AnimatedGridBackground from '@/components/ui/AnimatedGridBackground';
 
 gsap.registerPlugin(ScrollTrigger);
 
-import MagneticButton from '../ui/MagneticButton';
+import MagneticButton from '@/components/common/MagneticButton';
 
 /* ─── Pre-rendered Heading Letters ─── */
 const HEADING_TEXT = 'LEMNIDEV';

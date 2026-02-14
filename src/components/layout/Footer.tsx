@@ -1,6 +1,6 @@
 import React from 'react';
 import { Github, Instagram, Mail, ArrowUpRight } from 'lucide-react';
-import logo from '../assets/logoA.webp';
+import logo from '@/assets/logoA.webp';
 
 const Footer: React.FC = () => {
 
@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
                                 <li key={item}>
                                     <a
                                         href={`#${item.toLowerCase()}`}
-                                        className="text-gray-500 hover:text-indigo-400 transition-colors duration-300 flex items-center gap-1 group"
+                                        className="text-gray-400 hover:text-indigo-400 transition-colors duration-300 flex items-center gap-1 group"
                                     >
                                         {item}
                                         <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />

@@ -7,17 +7,26 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+.pnpm-store
+
+# Build
 dist
 dist-ssr
-*.local
+build
+out
+
+# Environment Variables
 .env
-.env.*
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
 !.env.example
-.vercel
-.idea
-.DS_Store
-Thumbs.db
+
+# Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -27,3 +36,17 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Testing
+coverage
+*.lcov
+.nyc_output
+
+# Misc
+.eslintcache
+*.tsbuildinfo
+*.bak
+*.tmp
+tmp/
+thumbs.db
+Desktop.ini
