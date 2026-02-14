@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 import LoadingScreen from './components/LoadingScreen';
 import './App.css';
 
@@ -17,7 +18,7 @@ function App() {
           <Route path="services" element={<div className="p-8">Services Page (Coming Soon)</div>} />
           <Route path="contact" element={<div className="p-8">Contact Page (Coming Soon)</div>} />
 
-          <Route path="*" element={<div className="p-8 text-center text-xl">404 - Page Not Found</div>} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </>

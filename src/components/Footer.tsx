@@ -41,10 +41,10 @@ const Footer: React.FC = () => {
                     <div>
                         <h4 className="font-semibold mb-6 text-white text-sm uppercase tracking-widest">Connect</h4>
                         <div className="flex space-x-3 mb-6">
-                            <a href="#" className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-indigo-500/30 hover:bg-indigo-500/10 transition-all duration-300">
+                            <a href="https://github.com/lemnidev" className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-indigo-500/30 hover:bg-indigo-500/10 transition-all duration-300">
                                 <Github size={18} />
                             </a>
-                            <a href="#" className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-indigo-500/30 hover:bg-indigo-500/10 transition-all duration-300">
+                            <a href="https://instagram.com/lemnidev" className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-indigo-500/30 hover:bg-indigo-500/10 transition-all duration-300">
                                 <Instagram size={18} />
                             </a>
                         </div>
