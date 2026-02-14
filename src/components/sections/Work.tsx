@@ -43,7 +43,7 @@ const TiltCard: React.FC<{ project: typeof projects[0] }> = ({ project }) => {
 
     return (
         <div ref={cardRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}
-            className={`work-card relative group overflow-hidden rounded-3xl bg-neutral-900 border border-white/5 hover:border-indigo-500/30 transition-colors duration-500 ${project.colSpan} ${project.rowSpan}`}
+            className={`work-card cursor-target relative group overflow-hidden rounded-3xl bg-neutral-900 border border-white/5 hover:border-indigo-500/30 transition-colors duration-500 ${project.colSpan} ${project.rowSpan}`}
             style={{ transformStyle: 'preserve-3d' }}>
             <div className="absolute inset-0">
                 <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />

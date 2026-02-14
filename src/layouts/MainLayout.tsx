@@ -11,8 +11,8 @@ const MainLayout: React.FC = () => {
     useSmoothScroll();
 
     return (
-        <div className="flex flex-col min-h-screen bg-neutral-950 text-white cursor-none">
-            <Cursor />
+        <div className="flex flex-col min-h-screen bg-neutral-950 text-white">
+            <Cursor targetSelector="a, button, .cursor-target" />
             <ScrollToTop />
             <Navbar />
             <main className="flex-grow">

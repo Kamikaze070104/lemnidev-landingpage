@@ -8,30 +8,41 @@ gsap.registerPlugin(ScrollTrigger);
 interface TeamMember {
     name: string;
     role: string;
-    initial: string;
-    gradient: string;
     github: string;
     image: string;
+    size: 'tall' | 'short';
+    customClass?: string;
 }
 
-/* ─── Data: Flattened Lists ─── */
-const row1: TeamMember[] = [
-    { name: 'Bentar Ristianto', role: 'Head of Solution', initial: 'B', gradient: 'from-indigo-500 to-violet-600', github: 'https://github.com/BentarCr00s', image: '/Bentar.webp' },
-    { name: 'Muh. Athif Fadh', role: 'Keuangan', initial: 'MA', gradient: 'from-emerald-500 to-teal-600', github: 'https://github.com/thiffadl', image: '/Athif.webp' },
-    { name: 'Agung Fathul', role: 'Human Relation', initial: 'AF', gradient: 'from-amber-500 to-orange-600', github: 'https://github.com/AgungFathul01', image: '/Agung.webp' },
-    { name: 'Najwa Ikhsaniyah', role: 'Desain Visual', initial: 'NI', gradient: 'from-pink-500 to-rose-600', github: '#', image: '/Najwa.webp' },
-    { name: 'M Nazlan Rizqon', role: 'Desain Animasi', initial: 'MN', gradient: 'from-violet-500 to-fuchsia-600', github: '#', image: '/Nazlan.webp' },
+/* ─── Data ─── */
+const teamMembers: TeamMember[] = [
+    { name: 'Bentar Ristianto', role: 'Head of Solution', github: 'https://github.com/BentarCr00s', image: '/Bentar.webp', size: 'tall' },
+    { name: 'Muh. Athif Fadh', role: 'Keuangan', github: 'https://github.com/thiffadl', image: '/Athif.webp', size: 'short' },
+    { name: 'Agung Fathul', role: 'Human Relation', github: 'https://github.com/AgungFathul01', image: '/Agung.webp', size: 'tall' },
+    { name: 'Najwa Ikhsaniyah', role: 'Desain Visual', github: '#', image: '/Najwa.webp', size: 'short' },
+    { name: 'M Nazlan Rizqon', role: 'Desain Animasi', github: '#', image: '/Nazlan.webp', size: 'tall' },
+    { name: 'Davi Hanan Luthfi', role: 'Fullstack Dev', github: 'https://github.com/NekoMorie', image: '/Davi.webp', size: 'short' },
+    { name: 'Rakandiya', role: 'Back-End Dev', github: 'https://github.com/Rakandiya', image: '/Rakandiya.webp', size: 'short' },
+    { name: 'M Fadhly R', role: 'Machine Learning', github: 'https://github.com/fadhlyrafi', image: '/Fadhly.webp', size: 'tall' },
+    { name: 'Ummam Hoerussifa', role: 'Machine Learning', github: 'https://github.com/Sumems', image: '/Ummam.webp', size: 'short' },
+    { name: 'M Dzakkir Kilman', role: 'Front-End Dev', github: 'https://github.com/dzakkirsolihin', image: '/Dzakkir.webp', size: 'tall' },
+    { name: 'Faizal Azzriel', role: 'Developer', github: 'https://github.com/Kamikaze070104', image: '/Faizal.webp', size: 'short' },
+    { name: 'Rangga Ali', role: 'IoT Developer', github: '#', image: '/Rangga.webp', size: 'short' },
 ];
 
-const row2: TeamMember[] = [
-    { name: 'Davi Hanan Luthfi', role: 'Fullstack Dev', initial: 'DH', gradient: 'from-cyan-500 to-blue-600', github: 'https://github.com/NekoMorie', image: '/Davi.webp' },
-    { name: 'Rakandiya', role: 'Back-End Dev', initial: 'R', gradient: 'from-sky-500 to-indigo-600', github: 'https://github.com/Rakandiya', image: '/Rakandiya.webp' },
-    { name: 'M Fadhly R', role: 'Machine Learning', initial: 'MF', gradient: 'from-purple-500 to-pink-600', github: 'https://github.com/fadhlyrafi', image: '/Fadhly.webp' },
-    { name: 'Ummam Hoerussifa', role: 'Machine Learning', initial: 'UH', gradient: 'from-fuchsia-500 to-purple-600', github: 'https://github.com/Sumems', image: '/Ummam.webp' },
-    { name: 'M Dzakkir Kilman', role: 'Front-End Dev', initial: 'MD', gradient: 'from-rose-500 to-red-600', github: 'https://github.com/dzakkirsolihin', image: '/Dzakkir.webp' },
-    { name: 'Faizal Azzriel', role: 'Developer', initial: 'FA', gradient: 'from-indigo-500 to-cyan-500', github: 'https://github.com/Kamikaze070104', image: '/Faizal.webp' },
-    { name: 'Rangga Ali', role: 'IoT Developer', initial: 'RA', gradient: 'from-lime-500 to-emerald-600', github: '#', image: '/Rangga.webp' },
-];
+/* ─── Height Map ─── */
+const heightMap = {
+    tall: 'h-[360px] md:h-[420px]',
+    short: 'h-[280px] md:h-[320px]',
+};
+
+/* ─── Offset Map (for directional animation) ─── */
+// tall = positioned lower → enters from above (negative y)
+// short = positioned higher → enters from below (positive y)
+const offsetYMap = {
+    tall: -50,
+    short: 50,
+};
 
 /* ─── GitHub Icon SVG ─── */
 const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -53,57 +64,49 @@ const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 /* ─── Capsule Card ─── */
-const TeamCard: React.FC<{ member: TeamMember }> = ({ member }) => (
-    <div className="group relative flex items-center gap-3 md:gap-5 p-2 pr-4 md:p-3 md:pr-8 rounded-full bg-neutral-900/50 border border-white/[0.08] backdrop-blur-sm transition-all duration-300 hover:bg-neutral-800 hover:border-indigo-500/30 hover:scale-[1.02] cursor-default min-w-[260px] md:min-w-[380px]">
+const CapsuleCard: React.FC<{ member: TeamMember; index: number }> = ({ member, index }) => {
+    const [tapped, setTapped] = React.useState(false);
 
-        {/* Hover Glow Effect */}
-        <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${member.gradient} opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-500 -z-10`} />
-
-        {/* Avatar - Image */}
-        <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full bg-neutral-800 flex items-center justify-center overflow-hidden flex-shrink-0 border-2 border-neutral-700/50 relative z-10`}>
+    return (
+        <div
+            className={`team-capsule group cursor-target relative rounded-[2.5rem] overflow-hidden flex-shrink-0 w-[140px] md:w-[180px] ${heightMap[member.size]} bg-neutral-800 transition-transform duration-500 ease-out border border-white/5`}
+            data-offset-y={offsetYMap[member.size]}
+            data-index={index}
+            onClick={() => setTapped((v) => !v)}
+        >
+            {/* Photo */}
             <img
                 src={member.image}
                 alt={member.name}
-                className="w-full h-full object-cover rounded-full"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 loading="lazy"
             />
-        </div>
 
-        {/* Info - Enlarge text */}
-        <div className="flex-1 min-w-0">
-            <h4 className="text-white font-bold text-sm md:text-lg truncate">{member.name}</h4>
-            <p className="text-indigo-400 text-xs md:text-sm font-medium truncate">{member.role}</p>
-        </div>
-
-        {/* GitHub Action */}
-        <a
-            href={member.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-500 hover:text-white transition-colors duration-200 p-1.5 md:p-2 hover:bg-white/10 rounded-full"
-            aria-label={`GitHub ${member.name}`}
-        >
-            <GithubIcon className="w-5 h-5 md:w-6 md:h-6" />
-        </a>
-    </div>
-);
-
-/* ─── Marquee Row ─── */
-const MarqueeRow: React.FC<{ items: TeamMember[]; direction: 'left' | 'right'; speed?: number }> = ({ items, direction, speed = 60 }) => {
-    // Duplicate 4 times to ensure seamless infinite loop
-    const doubled = [...items, ...items, ...items, ...items];
-    const animClass = direction === 'left' ? 'animate-marquee-left' : 'animate-marquee-right';
-
-    return (
-        <div className="flex overflow-hidden py-4 -my-2 select-none">
+            {/* Gradient overlay — visible on hover / tap */}
             <div
-                className={`flex gap-8 whitespace-nowrap ${animClass}`}
-                style={{ animationDuration: `${speed}s` }}
+                className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-500 ${tapped ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+            />
+
+            {/* Info overlay */}
+            <div
+                className={`absolute inset-x-0 bottom-0 p-5 flex flex-col gap-1 transition-all duration-500 ${tapped ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'}`}
             >
-                {doubled.map((item, i) => (
-                    <TeamCard key={i} member={item} />
-                ))}
+                <h4 className="text-white font-bold text-sm md:text-lg leading-tight">{member.name}</h4>
+                <p className="text-indigo-300 text-xs md:text-sm font-medium">{member.role}</p>
+                <a
+                    href={member.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 text-gray-400 hover:text-white transition-colors duration-200 w-fit"
+                    aria-label={`GitHub ${member.name}`}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <GithubIcon className="w-5 h-5" />
+                </a>
             </div>
+
+            {/* Subtle border */}
+            <div className="absolute inset-0 rounded-[2.5rem] ring-1 ring-white/10 pointer-events-none" />
         </div>
     );
 };
@@ -125,28 +128,33 @@ const Team: React.FC = () => {
                     duration: 0.8,
                     ease: 'power3.out',
                     scrollTrigger: {
-                        trigger: '.team-header',
-                        start: 'top 85%',
+                        trigger: sectionRef.current,
+                        start: 'top 75%',
                     }
                 }
             );
 
-            // Marquee fade-in
-            gsap.fromTo(
-                '.team-marquee-container',
-                { opacity: 0, y: 20 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    delay: 0.2,
-                    ease: 'power2.out',
-                    scrollTrigger: {
-                        trigger: '.team-marquee-container',
-                        start: 'top 90%',
+            // Capsule card animations — directional based on size offset
+            const capsules = gsap.utils.toArray<HTMLElement>('.team-capsule');
+            capsules.forEach((el, i) => {
+                const offsetY = parseInt(el.dataset.offsetY || '0', 10);
+                gsap.fromTo(
+                    el,
+                    { y: offsetY, opacity: 0, scale: 0.9 },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.9,
+                        delay: i * 0.05,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: '.team-capsule-grid',
+                            start: 'top 85%',
+                        }
                     }
-                }
-            );
+                );
+            });
         }, sectionRef);
         return () => ctx.revert();
     }, []);
@@ -170,17 +178,11 @@ const Team: React.FC = () => {
                 </p>
             </div>
 
-            {/* Marquee Container - Increased gap between rows */}
-            <div className="relative w-full flex flex-col gap-16 team-marquee-container z-10">
-                {/* Fade edges */}
-                <div className="absolute left-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-r from-neutral-950 to-transparent z-20 pointer-events-none" />
-                <div className="absolute right-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-l from-neutral-950 to-transparent z-20 pointer-events-none" />
-
-                {/* Row 1: Right direction - Slower speed */}
-                <MarqueeRow items={row1} direction="right" speed={80} />
-
-                {/* Row 2: Left direction - Slower speed */}
-                <MarqueeRow items={row2} direction="left" speed={90} />
+            {/* Capsule Grid - Horizontal Zig Zag */}
+            <div className="relative z-10 team-capsule-grid flex flex-wrap justify-center items-center gap-6 md:gap-8 px-4 max-w-[1400px] mx-auto min-h-[500px]">
+                {teamMembers.map((member, i) => (
+                    <CapsuleCard key={member.name} member={member} index={i} />
+                ))}
             </div>
         </section>
     );

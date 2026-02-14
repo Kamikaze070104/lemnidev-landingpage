@@ -83,7 +83,7 @@ const BentoCard: React.FC<{ service: typeof services[0]; index: number }> = ({ s
             ref={cardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className={`bento-card relative overflow-hidden rounded-3xl border border-white/[0.08] bg-neutral-900/60 backdrop-blur-sm group cursor-pointer transition-colors duration-500 hover:border-white/20 ${service.span}`}
+            className={`bento-card min-h-[300px] relative overflow-hidden rounded-3xl border border-white/[0.08] bg-neutral-900/60 backdrop-blur-sm group cursor-pointer transition-colors duration-500 hover:border-white/20 ${service.span}`}
         >
             <div ref={glowRef} className="absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none z-0" />
             <div className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none bg-gradient-to-br ${service.gradient} blur-xl -z-10 scale-[1.02]`} />
@@ -174,7 +174,7 @@ const Services: React.FC = () => {
                     </h3>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[300px] md:auto-rows-[300px]">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-auto md:auto-rows-[300px]">
                     {services.map((service, index) => (
                         <BentoCard key={index} service={service} index={index} />
                     ))}

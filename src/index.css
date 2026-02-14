@@ -43,3 +43,9 @@ body {
   background: #6366f1;
   /* indigo-500 */
 }
+
+@media (min-width: 768px) {
+  * {
+    cursor: none !important;
+  }
+}

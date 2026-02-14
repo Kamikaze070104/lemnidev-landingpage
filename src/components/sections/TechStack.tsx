@@ -56,7 +56,7 @@ const MarqueeRow: React.FC<{
                     <div
                         key={i}
                         title={item.name}
-                        className="flex items-center justify-center w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-white/[0.04] border border-white/[0.08] hover:border-indigo-500/40 hover:bg-indigo-500/10 transition-all duration-300 cursor-default group flex-shrink-0"
+                        className="cursor-target flex items-center justify-center w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-white/[0.04] border border-white/[0.08] hover:border-indigo-500/40 hover:bg-indigo-500/10 transition-all duration-300 cursor-default group flex-shrink-0"
                     >
                         {/* invert class makes the black icons white */}
                         <img
