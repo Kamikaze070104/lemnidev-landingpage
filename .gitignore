@@ -50,3 +50,8 @@ coverage
 tmp/
 thumbs.db
 Desktop.ini
+
+# Agent
+.agents
+.rules
+

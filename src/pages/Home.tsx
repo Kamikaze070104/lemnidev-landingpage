@@ -1,7 +1,7 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
-import SectionLoader from '@/components/common/SectionLoader';
+import LazySection from '@/components/common/LazySection';
 
 // Lazy load below-the-fold sections to improve initial load time (LCP)
 const Services = React.lazy(() => import('@/components/sections/Services'));
@@ -18,25 +18,30 @@ const Home: React.FC = () => {
             <Hero />
             <About />
 
-            {/* Lazy loaded sections */}
-            <Suspense fallback={<SectionLoader />}>
+            {/* Lazy loaded sections - only fetched when nearing viewport */}
+            <LazySection minHeight="800px">
                 <Services />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
+            </LazySection>
+
+            <LazySection minHeight="600px">
                 <TechStack />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
+            </LazySection>
+
+            <LazySection minHeight="800px">
                 <Work />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
+            </LazySection>
+
+            <LazySection minHeight="700px">
                 <Team />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
+            </LazySection>
+
+            <LazySection minHeight="600px">
                 <ClientsTestimonials />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
+            </LazySection>
+
+            <LazySection minHeight="500px">
                 <Contact />
-            </Suspense>
+            </LazySection>
         </div>
     );
 };
